@@ -7,11 +7,13 @@ const styles = {
   textAlign: "center",
   border: "red",
   borderStyle: "solid",
-  borderWidth: "2px",
+  borderWidth: "0px",
   height: "100vh",
   alignItems: "center",
   justifyContent: "space-around",
-  display: "flex"
+  display: "flex",
+  padding: "0px",
+  margin: "0px"
 };
 
 const App = () => (
