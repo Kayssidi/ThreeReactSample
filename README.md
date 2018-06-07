@@ -1,2 +1,0 @@
-# ThreeReactSample
-Created with CodeSandbox
