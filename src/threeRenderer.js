@@ -1,5 +1,6 @@
 import React from "react";
 import * as THREE from "three";
+import mainTexture from "./default.jpg";
 
 class ThreeRenderer extends React.Component {
   componentDidMount() {
@@ -18,34 +19,35 @@ class ThreeRenderer extends React.Component {
     const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000);
     camera.position.z = 5;
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshLambertMaterial({
-      color: 0xff0000
+    //scene
+
+    //const texture = new THREE.Texture(mainTexture);
+    const texture = new THREE.TextureLoader().load(mainTexture);
+
+    const geometryy = new THREE.PlaneGeometry(1, 1, 1);
+
+    const materiall = new THREE.MeshBasicMaterial({
+      map: texture,
+      opacity: 100,
+      side: THREE.DoubleSide,
+      transparent: false
     });
 
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    const mesh = new THREE.Mesh(geometryy, materiall);
 
-    const light_p = new THREE.PointLight(0xffffff);
-    light_p.position.set(100, 100, 100);
-    scene.add(light_p);
-
-    const light_a = new THREE.AmbientLight(0x333333);
-    scene.add(light_a);
+    scene.add(mesh);
 
     const animate = function() {
       requestAnimationFrame(animate);
 
       const f1 = Date.now() / 1000;
-      cube.rotation.x = Math.sin(f1);
-      cube.rotation.y = Math.cos(f1);
+      //mesh.rotation.x = Math.sin(f1);
+      //mesh.rotation.y = Math.cos(f1);
 
       renderer.render(scene, camera);
     };
 
     animate();
-
-    this.cube = cube;
   }
 
   componentWillUnmount() {
