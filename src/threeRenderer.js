@@ -4,8 +4,8 @@ import mainTexture from "./default.jpg";
 
 class ThreeRenderer extends React.Component {
   componentDidMount() {
-    const width = 400;
-    const height = width;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x222222);
@@ -16,9 +16,7 @@ class ThreeRenderer extends React.Component {
     renderer.setSize(width, height);
     renderer.setClearColor(0xffffff, 1.0);
 
-    const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000);
-    camera.position.z = 5;
-
+    const camera = new THREE.Camera();
     //scene
 
     //const texture = new THREE.Texture(mainTexture);
@@ -37,6 +35,7 @@ class ThreeRenderer extends React.Component {
 
     scene.add(mesh);
 
+    // Anim
     const animate = function() {
       requestAnimationFrame(animate);
 
