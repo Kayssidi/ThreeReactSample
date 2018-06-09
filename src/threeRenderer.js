@@ -1,9 +1,43 @@
 import React from "react";
-import * as THREE from "three";
+//import * as THREE from "three";
 import mainTexture from "./default.jpg";
+
+import * as AR from "jsartoolkit5";
+import cameraData from "./camera_para-iPhone.dat";
 
 class ThreeRenderer extends React.Component {
   componentDidMount() {
+    AR.ARController.getUserMediaThreeScene({
+      maxARVideoSize: 320,
+      cameraParam: cameraData,
+      onSuccess: function(arScene, arController, arCamera) {
+        const renderer = (this.renderer = new THREE.WebGLRenderer({
+          canvas: this.canvas
+        }));
+        const w =
+          window.innerWidth /
+          arController.videoHeight *
+          arController.videoWidth;
+        const h = window.innerWidth;
+        renderer.setSize(w, h);
+
+        var tick = function() {
+          arScene.process();
+
+          arScene.renderOn(renderer);
+          requestAnimationFrame(tick);
+        };
+        tick();
+      }
+    });
+  }
+  /*
+  componentDidMount() {
+    if (window.ARController && AR.ARController.getUserMediaThreeScene) {
+      //ARThreeOnLoad();
+      console.log("ARController ready");
+    }
+
     const width = window.innerWidth;
     const height = window.innerHeight;
 
@@ -48,9 +82,10 @@ class ThreeRenderer extends React.Component {
 
     animate();
   }
+  */
 
   componentWillUnmount() {
-    this.renderer.dispose();
+    //this.renderer.dispose();
   }
 
   storeRef = node => {
