@@ -4,6 +4,7 @@ import mainTexture from "./default.jpg";
 
 import * as AR from "jsartoolkit5";
 import cameraData from "./camera_para-iPhone.dat";
+import patternData from "./patt.hiro";
 
 class ThreeRenderer extends React.Component {
   constructor(props) {
@@ -26,6 +27,20 @@ class ThreeRenderer extends React.Component {
           arController.videoWidth;
         const h = window.innerWidth;
         renderer.setSize(w, h);
+
+        var sphere = new THREE.Mesh(
+          new THREE.SphereGeometry(0.5, 8, 8),
+          new THREE.MeshNormalMaterial()
+        );
+        sphere.material.shading = THREE.FlatShading;
+        sphere.position.z = 0.5;
+
+        arController.loadMarker(patternData, markerId => {
+          var markerRoot = arController.createThreeMarker(markerId);
+          markerRoot.add(sphere);
+          //arScene.scene.add(sphere);
+          arScene.scene.add(markerRoot);
+        });
 
         var tick = function() {
           arScene.process();
