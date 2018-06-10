@@ -11,9 +11,21 @@ class ThreeRenderer extends React.Component {
     super(props);
     this.renderer = null;
     this.canvas = null;
+    //this.state.devicesList = [];
+    this.state = {
+      devicesList: []
+      //field2: value2,
+    };
   }
 
   componentDidMount() {
+    navigator.mediaDevices
+      .enumerateDevices()
+      .then(devices => this.setState({ devicesList: devices }));
+
+    // console.log(devices[1].label
+
+    return;
     AR.ARController.getUserMediaThreeScene({
       maxARVideoSize: 320,
       cameraParam: cameraData,
@@ -115,7 +127,12 @@ class ThreeRenderer extends React.Component {
   };
 
   render() {
-    return <canvas id="three" ref={this.storeRef} />;
+    //return <canvas id="three" ref={this.storeRef} />;
+    return (
+      <div>
+        {this.state.devicesList.map(device => <div>*{device.deviceId}</div>)}
+      </div>
+    );
   }
 }
 
