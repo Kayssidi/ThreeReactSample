@@ -6,15 +6,20 @@ import * as AR from "jsartoolkit5";
 import cameraData from "./camera_para-iPhone.dat";
 
 class ThreeRenderer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.renderer = null;
+    this.canvas = null;
+  }
+
   componentDidMount() {
-    const canvasKDO = this.canvas;
     AR.ARController.getUserMediaThreeScene({
       maxARVideoSize: 320,
       cameraParam: cameraData,
-      onSuccess: function(arScene, arController, arCamera) {
-        const renderer = new THREE.WebGLRenderer({
-          canvas: canvasKDO
-        });
+      onSuccess: (arScene, arController, arCamera) => {
+        const renderer = (this.renderer = new THREE.WebGLRenderer({
+          canvas: this.canvas
+        }));
         const w =
           window.innerWidth /
           arController.videoHeight *
@@ -91,7 +96,6 @@ class ThreeRenderer extends React.Component {
 
   storeRef = node => {
     this.canvas = node;
-    console.log(this.canvas);
   };
 
   render() {
