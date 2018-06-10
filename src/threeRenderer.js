@@ -17,6 +17,7 @@ class ThreeRenderer extends React.Component {
     AR.ARController.getUserMediaThreeScene({
       maxARVideoSize: 320,
       cameraParam: cameraData,
+      facingMode: { exact: "environment" },
       onSuccess: (arScene, arController, arCamera) => {
         const renderer = (this.renderer = new THREE.WebGLRenderer({
           canvas: this.canvas
